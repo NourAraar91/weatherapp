@@ -3,9 +3,7 @@ import 'dart:ui';
 import 'package:flutter/Material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:weatherapp/bloc/current_weather_bloc.dart';
-import 'package:weatherapp/bloc/forcast_bloc.dart';
-import 'package:weatherapp/bloc/geo_location_bloc.dart';
+import 'package:weatherapp/bloc/current_wearther_widget_bloc.dart';
 import 'package:weatherapp/models/current_weather.dart';
 import 'package:weatherapp/models/forcast_result.dart';
 import 'package:weatherapp/models/weather_result.dart';
@@ -17,32 +15,22 @@ import 'package:weatherapp/extensions/extensions.dart';
 import 'forcast_weather_widget.dart';
 
 class CurrentWeartherWidget extends StatefulWidget {
-  CurrentWeartherWidget({Key key, this.city}) : super(key: key);
-  final String city;
+  CurrentWeartherWidget({Key key}) : super(key: key);
 
   @override
   _CurrentWeartherWidgetState createState() => _CurrentWeartherWidgetState();
 }
 
 class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
-  CurrentWeatherBloc weatherBloc;
-  ForcastBloc forcastBloc;
-  GeoLocationBloc locationBloc;
+  CurrentWeartherWidgetBloc bloc;
+  String currentCity;
 
   @override
   void initState() {
-    weatherBloc = CurrentWeatherBloc();
-    forcastBloc = ForcastBloc();
-    locationBloc = GeoLocationBloc();
-
-    weatherBloc.getCurrentWeatherByName(widget.city);
-    forcastBloc.getForcastByName(widget.city);
-    locationBloc.currentPositionController.listen((value) {
-      weatherBloc.getCurrentWeatherByLatAndLong(
-          value.latitude.toString(), value.longitude.toString());
-      forcastBloc.getForcastByLatAndLong(
-          value.latitude.toString(), value.longitude.toString());
-    });
+    bloc = CurrentWeartherWidgetBloc();
+    currentCity = bloc.currentCity;
+    bloc.getCurrentWeatherByName(currentCity);
+    bloc.getForcastByName(currentCity);
     super.initState();
   }
 
@@ -53,7 +41,7 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
       child: Stack(
         children: <Widget>[
           StreamBuilder<Response<CurrentWeather>>(
-              stream: weatherBloc.currentResultStream,
+              stream: bloc.currentResultStream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   switch (snapshot.data.status) {
@@ -62,13 +50,14 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
                       break;
                     case Status.COMPLETED:
                       var currentWeather = snapshot.data.data;
+                      bloc.setCurrentCityCache(currentWeather.name);
                       return buildMainContainer(currentWeather);
                       break;
                     case Status.ERROR:
                       return Error(
                         errorMessage: snapshot.data.message,
                         onRetryPressed: () =>
-                            weatherBloc.getCurrentWeatherByName(widget.city),
+                            bloc.getCurrentWeatherByName(currentCity),
                       );
                       break;
                   }
@@ -88,7 +77,7 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
       right: 0,
       height: 150,
       child: StreamBuilder<Response<ForcastResult>>(
-          stream: forcastBloc.forcastResultStream,
+          stream: bloc.forcastResultStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               switch (snapshot.data.status) {
@@ -99,8 +88,7 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
                 case Status.ERROR:
                   return Error(
                     errorMessage: snapshot.data.message,
-                    onRetryPressed: () =>
-                        forcastBloc.getForcastByName(widget.city),
+                    onRetryPressed: () => bloc.getForcastByName(currentCity),
                   );
               }
             }
@@ -160,7 +148,7 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
       alignment: Alignment(-1, 0),
       child: IconButton(
         onPressed: () {
-          locationBloc.getCurrentLocation();
+          bloc.getCurrentlocation();
         },
         icon: Icon(
           Icons.my_location,
