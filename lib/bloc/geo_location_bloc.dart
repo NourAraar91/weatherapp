@@ -6,10 +6,10 @@ class GeoLocationBloc {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _currentPosition;
 
-  BehaviorSubject<Position> _currentPositionController =
+  BehaviorSubject<Position> currentPositionController =
       BehaviorSubject<Position>();
   Stream<Position> get currentPositionStream =>
-      _currentPositionController.stream;
+      currentPositionController.stream;
 
   BehaviorSubject<Placemark> _currentPositionPlaceController =
       BehaviorSubject<Placemark>();
@@ -20,13 +20,15 @@ class GeoLocationBloc {
     geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
-      _currentPositionController.sink.add(position);
+      currentPositionController.sink.add(position);
       _currentPosition = position;
       getAddressFromLatLng();
     }).catchError((e) {
       print(e);
-      _currentPositionController.sink.addError(e);
+      currentPositionController.sink.addError(e);
     });
+
+    
   }
 
   void getAddressFromLatLng() async {
@@ -44,7 +46,7 @@ class GeoLocationBloc {
   }
 
   dispose() {
-    _currentPositionController.close();
+    currentPositionController.close();
     _currentPositionPlaceController.close();
   }
 }
