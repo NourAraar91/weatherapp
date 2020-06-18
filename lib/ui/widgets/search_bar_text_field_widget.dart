@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:weatherapp/ui/styles/colors.dart';
 
+///  a search bar text field with design
+///  you can pass all text field methods
+///  ontap
+///  onChanged
+///  onEdiditingComplete
+///  and also you can pass
+///  textfield controller
+///  Focus node
+///  
+
+
 class SearchBarTextField extends StatelessWidget {
   const SearchBarTextField({
     Key key,

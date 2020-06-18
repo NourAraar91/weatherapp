@@ -5,10 +5,10 @@ import 'package:weatherapp/models/world_cities.dart';
 
 class CitiesBloc {
   DataStore dataStore;
-
   List<String> _selectedCities;
   BehaviorSubject<String> _selectedCityController = BehaviorSubject<String>();
   Stream<String> get selectedCityStream => _selectedCityController.stream;
+  
   CitiesBloc() {
     dataStore = DataStore();
   }

@@ -3,6 +3,7 @@ import 'package:weatherapp/bloc/current_wearther_widget_bloc.dart';
 import 'package:weatherapp/models/place.dart';
 import 'package:weatherapp/ui/pages/world_cities_page.dart';
 import 'package:weatherapp/ui/widgets/current_weather_widget.dart';
+import 'package:weatherapp/ui/widgets/drop_down_widget.dart';
 import 'package:weatherapp/ui/widgets/navbar_widget.dart';
 import 'package:weatherapp/utilities/router.dart';
 
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
               right: 0,
               child: NavBar(
                 hideNavBar: true,
-                titleWidget: dropDown(),
+                titleWidget: buildDropDown(),
                 leading: buildMyLocationButton(),
                 actions: <Widget>[
                   IconButton(
@@ -84,7 +85,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  dropDown() {
+  buildDropDown() {
     return StreamBuilder<String>(
         stream: widget.weatherBloc.citiesBloc.selectedCityStream,
         builder: (context, snapshot) {
@@ -98,60 +99,5 @@ class _HomePageState extends State<HomePage> {
             selectedItem: snapshot.hasData ? snapshot.data : null,
           );
         });
-  }
-}
-
-class DropDown extends StatefulWidget {
-  DropDown({Key key, this.items, this.onSelecteItem, this.selectedItem})
-      : super(key: key);
-  final List<String> items;
-  final Function(int, String) onSelecteItem;
-  final String selectedItem;
-  @override
-  _DropDownState createState() => _DropDownState();
-}
-
-class _DropDownState extends State<DropDown> {
-  String dropdownValue = '';
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (widget.items != null) {
-      var index = widget.items.indexOf(widget.selectedItem);
-      if (index == -1) {
-        index = 0;
-      }
-      dropdownValue = widget.items.length > 0 ? widget.items[index] : '';
-    }
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: Icon(Icons.arrow_drop_down),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(
-        color: Color.fromARGB(255, 44, 44, 44),
-        fontSize: 16,
-      ),
-      underline: Container(
-        color: Colors.transparent,
-      ),
-      onChanged: (String newValue) {
-        var index = widget.items.indexOf(newValue);
-        widget.onSelecteItem(index, newValue);
-        setState(() {
-          dropdownValue = newValue;
-        });
-      },
-      items: widget.items.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
   }
 }

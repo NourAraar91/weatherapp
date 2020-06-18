@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:weatherapp/ui/styles/app_bar_style.dart';
 
 class NavBar extends StatelessWidget implements PreferredSizeWidget {
-  NavBar(
-      {this.titleWidget,
-      this.title,
-      this.centerTitle = true,
-      this.titleStyle,
-      this.backgroundColor,
-      this.hideNavBar = false,
-      this.showBackButton = false,
-      this.backButtonColor,
-      this.leading,
-      this.actions})
-      : preferredSize = const Size.fromHeight(60.0);
+  NavBar({
+    this.titleWidget,
+    this.title,
+    this.centerTitle = true,
+    this.titleStyle,
+    this.backgroundColor,
+    this.hideNavBar = false,
+    this.showBackButton = false,
+    this.backButtonColor,
+    this.leading,
+    this.actions,
+  }) : preferredSize = const Size.fromHeight(60.0);
 
   final String title;
   final bool centerTitle;

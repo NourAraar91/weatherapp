@@ -1,5 +1,10 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// this class is responisble for handling the shared preferences
+/// and cache for the app
+/// you can create an opject of this class and use the prefs 
+/// attribute to save and retrive data from cache
+
 class DataStore {
   static SharedPreferences _prefs;
 

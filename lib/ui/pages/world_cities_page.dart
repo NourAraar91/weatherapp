@@ -58,32 +58,6 @@ class _WorldCitiesPageState extends State<WorldCitiesPage> {
     );
   }
 
-  searchFor(String query) {
-    var tempItem = itemsList;
-    if (query.isNotEmpty) {
-      isSearching = true;
-      List<String> dummyListData = [];
-      tempItem.forEach((user) {
-        if (user.toLowerCase().contains(query.toLowerCase())) {
-          dummyListData.add(user);
-        }
-      });
-
-      setState(() {
-        searchList.clear();
-        searchList.addAll(dummyListData);
-      });
-
-      return;
-    } else {
-      isSearching = false;
-      setState(() {
-        searchList.clear();
-        searchList.addAll(itemsList);
-      });
-    }
-  }
-
   listText() {
     var items = List<String>();
     if (isSearching) {
@@ -128,6 +102,32 @@ class _WorldCitiesPageState extends State<WorldCitiesPage> {
         }
       },
     );
+  }
+
+  searchFor(String query) {
+    var tempItem = itemsList;
+    if (query.isNotEmpty) {
+      isSearching = true;
+      List<String> dummyListData = [];
+      tempItem.forEach((user) {
+        if (user.toLowerCase().contains(query.toLowerCase())) {
+          dummyListData.add(user);
+        }
+      });
+
+      setState(() {
+        searchList.clear();
+        searchList.addAll(dummyListData);
+      });
+
+      return;
+    } else {
+      isSearching = false;
+      setState(() {
+        searchList.clear();
+        searchList.addAll(itemsList);
+      });
+    }
   }
 }
 
