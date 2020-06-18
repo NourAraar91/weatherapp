@@ -51,7 +51,8 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
                       break;
                     case Status.COMPLETED:
                       var currentWeather = snapshot.data.data;
-                      bloc.citiesBloc.addNewCityToSelectedCities(currentWeather.name);
+                      bloc.citiesBloc
+                          .addNewCityToSelectedCities(currentWeather.name);
                       return buildMainContainer(currentWeather);
                       break;
                     case Status.ERROR:
@@ -105,6 +106,9 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
         child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // here we took every 8th element because 
+            // the forcast is for 5 days every 3 hours
+            // so every 8th element is a new day
             children: list.everyNthElement(8).map((WeatherResult element) {
               return ForcastWeatherWidget(element: element);
             }).toList()),

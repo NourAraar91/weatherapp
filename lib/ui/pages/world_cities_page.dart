@@ -50,7 +50,7 @@ class _WorldCitiesPageState extends State<WorldCitiesPage> {
                   searchFor(query);
                 },
               ),
-              Expanded(child: listText())
+              Expanded(child: buildItemList())
             ],
           ),
         ),
@@ -58,7 +58,7 @@ class _WorldCitiesPageState extends State<WorldCitiesPage> {
     );
   }
 
-  listText() {
+  buildItemList() {
     var items = List<String>();
     if (isSearching) {
       items = searchList;
