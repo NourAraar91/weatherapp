@@ -25,7 +25,7 @@ class CurrentWeartherWidgetBloc {
   Stream<Response<ForcastResult>> get forcastResultStream =>
       forcastBloc.forcastResultStream;
 
-  String get currentCity => citiesBloc.getCurrentCityCache() ?? 'Damascus';
+  String get currentCity => citiesBloc.getCurrentCityCache() ?? 'Kuala Lumpur';
 
   setCurrentCityCache(String city) {
     citiesBloc.setCurrentCityCache(city);
