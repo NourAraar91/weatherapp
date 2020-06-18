@@ -40,11 +40,14 @@ class CurrentWeartherWidgetBloc {
   }
 
   getCurrentlocation() {
+    locationBloc.getCurrentLocation();
     locationBloc.currentPositionController.listen((value) {
       weatherBloc.getCurrentWeatherByLatAndLong(
           value.latitude.toString(), value.longitude.toString());
       forcastBloc.getForcastByLatAndLong(
           value.latitude.toString(), value.longitude.toString());
+    }).onError((error) {
+      print(error);
     });
   }
 }

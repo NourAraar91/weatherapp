@@ -10,13 +10,14 @@ import 'package:weatherapp/models/weather_result.dart';
 import 'package:weatherapp/network/Repsonse.dart';
 import 'package:weatherapp/ui/widgets/tempruter_text.dart';
 import 'common_widgets/loading_widger.dart';
+import 'common_widgets/error_widget.dart';
 import 'package:weatherapp/extensions/extensions.dart';
 
 import 'forcast_weather_widget.dart';
 
 class CurrentWeartherWidget extends StatefulWidget {
-  CurrentWeartherWidget({Key key}) : super(key: key);
-
+  CurrentWeartherWidget({Key key, this.weatherBloc}) : super(key: key);
+  final CurrentWeartherWidgetBloc weatherBloc;
   @override
   _CurrentWeartherWidgetState createState() => _CurrentWeartherWidgetState();
 }
@@ -27,7 +28,7 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
 
   @override
   void initState() {
-    bloc = CurrentWeartherWidgetBloc();
+    bloc = widget.weatherBloc;
     currentCity = bloc.currentCity;
     bloc.getCurrentWeatherByName(currentCity);
     bloc.getForcastByName(currentCity);
@@ -104,7 +105,7 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
         child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: list.nthElement(8).map((WeatherResult element) {
+            children: list.everyNthElement(8).map((WeatherResult element) {
               return ForcastWeatherWidget(element: element);
             }).toList()),
       ),
@@ -125,7 +126,6 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
           SizedBox(
             height: 44,
           ),
-          buildMyLocationButton(),
           builDateWidget(currentWeather),
           buildTimeWidget(currentWeather),
           buildLocationWidget(currentWeather),
@@ -142,31 +142,12 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
     );
   }
 
-  Container buildMyLocationButton() {
-    return Container(
-      margin: EdgeInsets.only(left: 16.0),
-      alignment: Alignment(-1, 0),
-      child: IconButton(
-        onPressed: () {
-          bloc.getCurrentlocation();
-        },
-        icon: Icon(
-          Icons.my_location,
-          size: 32,
-          color: Colors.white,
-        ),
-      ),
-    );
-  }
-
   Column buildWeatherWidget(CurrentWeather currentWeather) {
     return Column(
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 32.0),
           child: Image(
-            width: 200,
-            height: 200,
             fit: BoxFit.fill,
             image: AdvancedNetworkImage(
                 'http://openweathermap.org/img/wn/${currentWeather.weather[0].icon}@2x.png',

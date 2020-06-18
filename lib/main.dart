@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weatherapp/bloc/current_wearther_widget_bloc.dart';
 import 'package:weatherapp/datastore/datastore.dart';
 import 'package:weatherapp/ui/pages/home_page.dart';
 
@@ -15,7 +16,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Weather App',
       theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Barlow'),
-      home: HomePage(),
+      home: HomePage(
+        weatherBloc: CurrentWeartherWidgetBloc(),
+      ),
     );
   }
 }
