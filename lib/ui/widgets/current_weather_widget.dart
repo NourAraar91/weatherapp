@@ -51,7 +51,7 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
                       break;
                     case Status.COMPLETED:
                       var currentWeather = snapshot.data.data;
-                      bloc.setCurrentCityCache(currentWeather.name);
+                      bloc.citiesBloc.addNewCityToSelectedCities(currentWeather.name);
                       return buildMainContainer(currentWeather);
                       break;
                     case Status.ERROR:

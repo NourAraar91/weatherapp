@@ -46,7 +46,6 @@ class _HomePageState extends State<HomePage> {
                           WorldCitiesPage(
                             items: cities.map((e) => e.city).toList(),
                             onSelectItem: (index, item) {
-                              widget.weatherBloc.citiesBloc.addNewCityToSelectedCities(item);
                               widget.weatherBloc.getCurrentWeatherByName(item);
                               widget.weatherBloc.getForcastByName(item);
                               Navigator.of(context).pop();
@@ -93,7 +92,6 @@ class _HomePageState extends State<HomePage> {
             items: widget.weatherBloc.citiesBloc.selectedCities,
             onSelecteItem: (index, item) {
               print(item);
-              widget.weatherBloc.citiesBloc.addNewCityToSelectedCities(item);
               widget.weatherBloc.getCurrentWeatherByName(item);
               widget.weatherBloc.getForcastByName(item);
             },
@@ -127,7 +125,7 @@ class _DropDownState extends State<DropDown> {
       if (index == -1) {
         index = 0;
       }
-      dropdownValue = widget.items[index];
+      dropdownValue = widget.items.length > 0 ? widget.items[index] : '';
     }
     return DropdownButton<String>(
       value: dropdownValue,
