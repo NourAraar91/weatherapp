@@ -138,7 +138,7 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
             height: 16,
           ),
           TempretureText(
-            tempreture: currentWeather.main.temp.floor().toString(),
+            tempreture: currentWeather.main.temp.floor(),
             style: TextStyle(fontSize: 92, color: Colors.white),
           ),
         ],

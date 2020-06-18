@@ -22,7 +22,7 @@ class ForcastWeatherWidget extends StatelessWidget {
                   'http://openweathermap.org/img/wn/${element.weather[0].icon}.png'),
             ),
             TempretureText(
-              tempreture: element.main.temp.floor().toString(),
+              tempreture: element.main.temp.floor(),
               style: TextStyle(
                   fontSize: 14,
                   color: Color.fromARGB(255, 44, 44, 44),
