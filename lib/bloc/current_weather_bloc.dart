@@ -52,14 +52,14 @@ class CurrentWeatherBloc {
     if (dataStore.prefs == null) {
       return;
     }
-    dataStore.prefs.setString(city, currentWeatherToJson(weather));
+    dataStore.prefs.setString('current_$city', currentWeatherToJson(weather));
   }
 
   CurrentWeather getCityFromCache(String city) {
     if (dataStore.prefs == null) {
       return null;
     }
-    var cityStr = dataStore.prefs.getString(city);
+    var cityStr = dataStore.prefs.getString('current_$city');
     var u = cityStr != null ? currentWeatherFromJson(cityStr) : null;
     return u;
   }

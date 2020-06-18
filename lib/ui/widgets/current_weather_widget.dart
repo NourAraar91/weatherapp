@@ -117,21 +117,21 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
       constraints: BoxConstraints.expand(),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: currentWeather.weather[0].image,
+          image: currentWeather.weather.first.image ?? '',
           fit: BoxFit.cover,
         ),
       ),
       child: Column(
         children: <Widget>[
           SizedBox(
-            height: 44,
+            height: 72,
           ),
           builDateWidget(currentWeather),
           buildTimeWidget(currentWeather),
           buildLocationWidget(currentWeather),
           buildWeatherWidget(currentWeather),
           SizedBox(
-            height: 24,
+            height: 16,
           ),
           TempretureText(
             tempreture: currentWeather.main.temp.floor().toString(),
@@ -146,16 +146,16 @@ class _CurrentWeartherWidgetState extends State<CurrentWeartherWidget> {
     return Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 32.0),
+          padding: const EdgeInsets.only(top: 16.0),
           child: Image(
             fit: BoxFit.fill,
             image: AdvancedNetworkImage(
-                'http://openweathermap.org/img/wn/${currentWeather.weather[0].icon}@2x.png',
+                'http://openweathermap.org/img/wn/${currentWeather.weather.first.icon}@2x.png',
                 useDiskCache: true),
           ),
         ),
         Text(
-          currentWeather.weather[0].description,
+          currentWeather.weather.first.description ?? '',
           style: TextStyle(color: Colors.white, fontSize: 18),
         ),
       ],

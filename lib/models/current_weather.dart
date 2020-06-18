@@ -25,7 +25,6 @@ class CurrentWeather {
         this.timezone,
         this.id,
         this.name,
-        this.cod,
     });
 
     Coord coord;
@@ -40,7 +39,6 @@ class CurrentWeather {
     int timezone;
     int id;
     String name;
-    int cod;
 
     factory CurrentWeather.fromJson(Map<String, dynamic> json) => CurrentWeather(
         coord: json["coord"] == null ? null : Coord.fromJson(json["coord"]),
@@ -55,7 +53,6 @@ class CurrentWeather {
         timezone: json["timezone"] == null ? null : json["timezone"],
         id: json["id"] == null ? null : json["id"],
         name: json["name"] == null ? null : json["name"],
-        cod: json["cod"] == null ? null : json["cod"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -71,6 +68,5 @@ class CurrentWeather {
         "timezone": timezone == null ? null : timezone,
         "id": id == null ? null : id,
         "name": name == null ? null : name,
-        "cod": cod == null ? null : cod,
     };
 }
